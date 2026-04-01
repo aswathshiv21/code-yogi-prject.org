@@ -34,18 +34,17 @@ function App() {
     price: "26.34"
   },]
 
-  function creatpro() {
+  let list =``;
 
   for (let i = 0; i < prod.length; i++) {
     let src1 = prod[i].src;
     let title2 = prod[i].title;
     let price3 = prod[i].price;
 
-    return <Product src={src1} title={title2} price={price3}/>
+    list += <Product src={src1} title={title2} price={price3}/>
   }
-  return creatpro()
-
-}
+  
+ return list;
 }
 
 export default App
