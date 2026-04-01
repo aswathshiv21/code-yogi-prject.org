@@ -3,48 +3,22 @@ import Product from './product'
 
 
 function App() {
-
-  let prod = [{
-    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVMDJ98IA87OPTWL92g8W4O9Mi98OAzI93bg&s',
-    title: 'plane white mugs',
-    price: "10"
-  },{
-    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4evPmVuUqWL2_mioxOuV1VhryHZ6UMJUuQw&s',
-    title: 'two in one mug',
-    price: "80"
-  },{
-    src: 'https://pebel.in/cdn/shop/files/Websiteimages4_13.png?v=1764343423',
-    title: 'plastic + wooden',
-    price: "20"
-  },{
-    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJlle5hRO-TR81XZCjqJE5KP0ZbVACYe-2eA&s',
-    title: 'costom made mugs',
-    price: "30"
-  },{
-    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP_wvDK1YsoyHi8ph-ZAU8dyP37JM-ACCLPA&s',
-    title: 'photo printed T-shirts',
-    price: "48.9"
-  },{
-    src: 'https://bratmacrafts.com/cdn/shop/files/2_caec75e0-66e2-4a50-9263-f4d57bb93336.jpg?v=1727522686',
-    title: 'spacia designd T-shirt',
-    price: "51.6"
-  },{
-    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTez4MVGUANZIvM2ae-16lSaLzHzB6rZFtsLQ&s',
-    title: 'plane yellow T-shirt',
-    price: "26.34"
-  },]
-
-  let list =``;
-
-  for (let i = 0; i < prod.length; i++) {
-    let src1 = prod[i].src;
-    let title2 = prod[i].title;
-    let price3 = prod[i].price;
-
-    list += <Product src={src1} title={title2} price={price3}/>
-  }
-  
- return list;
+  return (
+    <>
+     <div className='flex items-center justify-center'>
+      <div className='w-6xl flex flex-wrap items-center justify-center'>
+         <Product title="plane white mugs" src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVMDJ98IA87OPTWL92g8W4O9Mi98OAzI93bg&s' price="10"> </Product>
+         <Product title="two in one mug" src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4evPmVuUqWL2_mioxOuV1VhryHZ6UMJUuQw&s' price="80"> </Product>
+         <Product title="plastic + wooden" src='https://pebel.in/cdn/shop/files/Websiteimages4_13.png?v=1764343423' price="20"> </Product>
+         <Product title="costom made mugs" src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJlle5hRO-TR81XZCjqJE5KP0ZbVACYe-2eA&s' price="30"> </Product>
+         <Product title="photo printed T-shirts" src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP_wvDK1YsoyHi8ph-ZAU8dyP37JM-ACCLPA&s' price="48.9"> </Product>
+         <Product title="spacia designd T-shirt" src='https://bratmacrafts.com/cdn/shop/files/2_caec75e0-66e2-4a50-9263-f4d57bb93336.jpg?v=1727522686' price="51.6"> </Product>
+         <Product title="plane blue T-shirt" src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJlyGYSCLw5VhIWvfMaYKxrcf5XaLMnc9qAA&s' price="12.54"> </Product>
+         <Product title="plane yellow T-shirt" src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTez4MVGUANZIvM2ae-16lSaLzHzB6rZFtsLQ&s' price="26.34"> </Product>
+      </div>
+     </div>
+    </>
+  )
 }
 
 export default App
