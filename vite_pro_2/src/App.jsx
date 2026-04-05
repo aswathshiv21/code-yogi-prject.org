@@ -9,6 +9,7 @@ function App() {
         <Table></Table>
         <Table></Table>
         <Table></Table>
+        <Table></Table>
       </div>
     </>
   )

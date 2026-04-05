@@ -17,6 +17,12 @@ function Table() {
             <TableRow Int={num} Nums={'2'}/>
             <TableRow Int={num} Nums={'3'}/>
             <TableRow Int={num} Nums={'4'}/>
+            <TableRow Int={num} Nums={'5'}/>
+            <TableRow Int={num} Nums={'6'}/>
+            <TableRow Int={num} Nums={'7'}/>
+            <TableRow Int={num} Nums={'8'}/>
+            <TableRow Int={num} Nums={'9'}/>
+            <TableRow Int={num} Nums={'10'}/>
           </div>
         </>
     )
