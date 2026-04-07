@@ -3,6 +3,10 @@ import ProductList from './productList'
 
 
 function App() {
+  
+  const [quiry, setquiry] = useState('');
+
+  const [sort, setSort] = useState(`default`)
 
   const prod = [{
     src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVMDJ98IA87OPTWL92g8W4O9Mi98OAzI93bg&s',
@@ -42,18 +46,33 @@ function App() {
     price: '15.5'
   }]
 
-  const [quiry, setquiry] = useState('');
 
-  let [data, setData] = useState(prod);
+  let data = prod.filter(function (item) {
+    const lowercasetitle = item.title.toLocaleLowerCase();
+    const lowercasequiry = quiry.toLocaleLowerCase()
+
+    return lowercasetitle.indexOf(lowercasequiry) != -1
+  })
 
   function handleinputchange(event) {
     let newQuire = event.target.value;
-
-    setData(prod.filter(item => 
-     item.title.toLowerCase().includes(newQuire.toLowerCase())
-     ))
-
     setquiry(newQuire)
+  }
+
+  if (sort == 'price') {
+    data.sort((x,y)=>{
+      return x.price - y.price
+    })
+  }else if (sort == 'name') {
+    data.sort((x,y)=>{
+      return x.title < y.title ? -1 : 1;
+    })
+  }
+
+  function handlesortchange(event) {
+    let e = event.target.value
+    setSort(e)
+    console.log(e);
   }
 
   return ( 
@@ -66,6 +85,12 @@ function App() {
            onChange={handleinputchange} 
            className='self-center flex items-center justify-center w-3xl m-6 p-4 rounded-full hover:bg-gray-200'
           />
+
+          <select onChange={handlesortchange} value={sort}>
+            <option value="default">Default sort</option>
+            <option value="name">Sort by name</option>
+            <option value="price">Sort by price</option>
+          </select>
          < ProductList products={data}/>
       </div>
     </>
