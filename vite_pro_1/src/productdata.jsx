@@ -22,7 +22,7 @@ function Productdata(){
     return (
         <>
           <div className='w-full flex flex-wrap justify-center h-screen justify-evenly' >
-            <Link to={'/productList'}>home page</Link>
+            <Link to={'/'}>home page</Link>
             <div className='p-5 w-full flex h-100 '>
               <img src={product.src} alt="" className='h-full'/>
               <div className='ml-10 flex flex-col '>
