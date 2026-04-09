@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from 'react-router-dom'
 
-function Product({title, price,src}) {
+function Product({title, price, src, sku}) {
     return (
         <>
           <div className="border-1 flex flex-col border-gray-200 w-2xs h-96 p-4 m-4">
@@ -8,6 +9,7 @@ function Product({title, price,src}) {
             <p className="text-xs text-gray-700 inline-block ">Mugs</p>
             <h5 >{title}</h5>
             <p className="inline-block ">${price}</p>
+            <Link to={'/productData/' + sku}>view details</Link>
           </div>
         </>
     )
