@@ -1,10 +1,10 @@
 import React from "react";
 
-function NonMatching(){
+function NonMatching({title}){
     return(
         <>
           <div>
-            <p>No match found </p>
+            <p>{title}</p>
           </div>
         </>
     )

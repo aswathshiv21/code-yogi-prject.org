@@ -1,6 +1,7 @@
 import {Routes, Route} from 'react-router-dom'
 import Productdata from './productdata';
 import ProductListPage from './productListPage';
+import {AddDataPage} from './addDataPage';
 
 function App() {
 
@@ -10,6 +11,7 @@ function App() {
          <Routes>
            <Route index element={<ProductListPage/>}></Route>
            <Route path={'/productData/:sku'} element={<Productdata/>}></Route>
+           <Route path='/addData' element={<AddDataPage/>}></Route>
          </Routes>
       </div>
     </>

@@ -3,12 +3,13 @@ import ProductList from "./productList";
 import prod from "./dumyData";
 import { useState } from "react";
 import NonMatching from "./nonMatchingr";
+import NavBar from "./navBar";
 
 function ProductListPage() {
+  
   const [quiry, setquiry] = useState('');
 
   const [sort, setSort] = useState(`default`)
-
 
   let data = prod.filter(function (item) {
     const lowercasetitle = item.title.toLocaleLowerCase();
@@ -40,6 +41,7 @@ function ProductListPage() {
 
     return (
         <div className="flex flex-col">
+          <NavBar />
           <div className='flex w-full justify-evenly border-none items-center justify-center '>
             <input 
              id='input'
@@ -56,8 +58,8 @@ function ProductListPage() {
             <option value="price">Sort by price</option>
           </select>
          </div>
-         {data.length > 0 && <ProductList/>}
-         {data.length == 0 && <NonMatching />}
+         {data.length > 0 && <ProductList item={data}/>}
+         {data.length == 0 && <NonMatching title='not match found'/>}
         </div>
     )
 }
