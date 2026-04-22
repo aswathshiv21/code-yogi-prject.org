@@ -1,14 +1,12 @@
 import React from "react";
 import ProductList from "./productList";
-import prod from "./dumyData";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NonMatching from "./nonMatchingr";
 import NavBar from "./navBar";
+import axios from "axios";
 
-function ProductListPage() {
-  
+function ProductListPage({prod}) {
   const [quiry, setquiry] = useState('');
-
   const [sort, setSort] = useState(`default`)
 
   let data = prod.filter(function (item) {
@@ -36,8 +34,10 @@ function ProductListPage() {
   function handlesortchange(event) {
     let e = event.target.value
     setSort(e)
-    console.log(e);
   }
+
+  console.log(data);
+  
 
     return (
         <div className="flex flex-col">

@@ -10,10 +10,10 @@ function ProductList({item}) {
       <div className='w-6xl flex flex-wrap items-center justify-center'>
          {item.map((i)=> {
             return <Product
-              src={i.src}
+              src={i.thumbnail}
               title={i.title}
               price={i.price}
-              sku={i.sku}
+              sku={i.id}
               rat={i.rating}
             />   
         })}
