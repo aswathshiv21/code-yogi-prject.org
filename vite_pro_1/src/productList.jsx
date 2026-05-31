@@ -5,9 +5,9 @@ import prod from "./dumyData";
     
 function ProductList({item}) {
     return (
-    <>
-     <div className='flex items-center justify-center'>
-      <div className='w-6xl flex flex-wrap items-center justify-center'>
+    <> 
+     <div className='flex items-center justify-center bg-white'>
+      <div className='md:grid md:grid-cols-4 gap-2'>
          {item.map((i)=> {
             return <Product
               src={i.thumbnail}

@@ -7,18 +7,18 @@ import axios from "axios";
 
 function ProductListPage({prod}) {
   const [quiry, setquiry] = useState('');
-  const [sort, setSort] = useState(`default`)
+  const [sort, setSort] = useState(`default`);
 
   let data = prod.filter(function (item) {
     const lowercasetitle = item.title.toLocaleLowerCase();
-    const lowercasequiry = quiry.toLocaleLowerCase()
+    const lowercasequiry = quiry.toLocaleLowerCase();
 
-    return lowercasetitle.indexOf(lowercasequiry) != -1
+    return lowercasetitle.indexOf(lowercasequiry) != -1;
   })
 
   function handleinputchange(event) {
     let newQuire = event.target.value;
-    setquiry(newQuire)
+    setquiry(newQuire);
   }
 
   if (sort == 'price') {
@@ -40,9 +40,8 @@ function ProductListPage({prod}) {
   
 
     return (
-        <div className="flex flex-col">
-          <NavBar />
-          <div className='flex w-full justify-evenly border-none items-center justify-center '>
+        <div className="flex flex-col bg-white w-full p-7">
+          <div className='flex w-full justify-evenly border-none items-center'>
             <input 
              id='input'
              type="text" 
