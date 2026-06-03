@@ -4,8 +4,11 @@ import { useState, useEffect } from "react";
 import NonMatching from "./nonMatchingr";
 import NavBar from "./navBar";
 import axios from "axios";
+import { memo } from "react";
 
-function ProductListPage({prod}) {
+function ProductListPage({prod, handleCard}) {
+
+
   const [quiry, setquiry] = useState('');
   const [sort, setSort] = useState(`default`);
 
@@ -36,7 +39,7 @@ function ProductListPage({prod}) {
     setSort(e)
   }
 
-  console.log(data);
+  // console.log(data);
   
 
     return (
@@ -57,10 +60,10 @@ function ProductListPage({prod}) {
             <option value="price">Sort by price</option>
           </select>
          </div>
-         {data.length > 0 && <ProductList item={data}/>}
+         {data.length > 0 && <ProductList item={data} handleCard={handleCard}/>}
          {data.length == 0 && <NonMatching title='not match found'/>}
         </div>
     )
 }
 
-export default ProductListPage;
+export default memo(ProductListPage);

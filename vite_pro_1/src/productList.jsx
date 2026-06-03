@@ -1,9 +1,11 @@
 import React from "react";          
 import Product from "./product";    
 import { useState } from "react";
-import prod from "./dumyData";
+import { memo } from "react";
+
     
-function ProductList({item}) {
+function ProductList({item, handleCard}) {
+
     return (
     <> 
      <div className='flex items-center justify-center bg-white'>
@@ -15,6 +17,8 @@ function ProductList({item}) {
               price={i.price}
               sku={i.id}
               rat={i.rating}
+              category={i.category}
+              handleCard={handleCard}
             />   
         })}
       </div>
@@ -23,5 +27,6 @@ function ProductList({item}) {
 )
 }
 
-export default ProductList;
+export default memo(ProductList);
+
  

@@ -1,241 +1,385 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import Product from "./product";
 
 const styles = `
-  @import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600&family=DM+Sans:wght@400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap');
   @import url('https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css');
 
   * { box-sizing: border-box; }
 
-  .header-wrap {
-    font-family: 'DM Sans', sans-serif;
-    border-radius: 0 0 16px 16px;
-    overflow: hidden;
+  /* ── Keyframes ── */
+  @keyframes nb-shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
   }
 
-  .promo-bar {
-    background: #6AAB55;
+  @keyframes nb-gradientLine {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+
+  @keyframes nb-cartPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.45); }
+    50% { box-shadow: 0 0 16px 4px rgba(16,185,129,0.25); }
+  }
+
+  @keyframes nb-searchGlow {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  /* ── Header wrapper ── */
+  .nb-header-wrap {
+    font-family: 'Inter', sans-serif;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-radius: 0 0 18px 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+  }
+
+  /* ── Promo bar ── */
+  .nb-promo-bar {
+    background: linear-gradient(90deg, #10B981, #06B6D4, #8B5CF6, #10B981);
+    background-size: 300% 100%;
+    animation: nb-shimmer 6s linear infinite;
     color: #fff;
     text-align: center;
     font-size: 12px;
     font-weight: 500;
-    padding: 7px 16px;
+    padding: 8px 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
+    letter-spacing: 0.2px;
   }
-  .promo-bar a { color: #fff; text-decoration: underline; cursor: pointer; }
-  .promo-close {
-    margin-left: auto;
-    background: none;
-    border: none;
-    color: rgba(255,255,255,0.8);
+  .nb-promo-bar a {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 2px;
     cursor: pointer;
-    font-size: 16px;
-    padding: 0 4px;
+    font-weight: 600;
+  }
+  .nb-promo-close {
+    margin-left: auto;
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 2px 6px;
+    border-radius: 4px;
     line-height: 1;
+    transition: background 0.2s;
+  }
+  .nb-promo-close:hover { background: rgba(255,255,255,0.3); }
+
+  /* ── Gradient line separator ── */
+  .nb-gradient-line {
+    height: 2px;
+    background: linear-gradient(90deg, #10B981, #06B6D4, #8B5CF6, #EC4899, #10B981);
+    background-size: 200% 100%;
+    animation: nb-gradientLine 4s linear infinite;
   }
 
-  .top-bar {
-    background: #2D4A2D;
-    padding: 10px 2rem;
+  /* ── Top bar ── */
+  .nb-top-bar {
+    background: #0F1923;
+    padding: 14px 2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 18px;
     flex-wrap: wrap;
   }
 
-  .logo {
-    font-family: 'Fraunces', serif;
-    font-size: 24px;
-    font-weight: 600;
-    color: #B8DCAB;
+  /* ── Logo ── */
+  .nb-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #10B981, #06B6D4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     text-decoration: none;
     white-space: nowrap;
     flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+  .nb-logo:hover { transform: scale(1.03); }
+  .nb-logo i {
+    font-size: 24px;
+    background: linear-gradient(135deg, #10B981, #06B6D4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
-  .delivery-pill {
+  /* ── Delivery pill ── */
+  .nb-delivery-pill {
     display: flex;
     align-items: center;
-    gap: 6px;
-    background: rgba(255,255,255,0.08);
-    border: 0.5px solid rgba(255,255,255,0.15);
-    border-radius: 20px;
-    padding: 6px 14px;
+    gap: 7px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 24px;
+    padding: 7px 16px;
     font-size: 12px;
-    color: #A8C9A0;
+    color: rgba(255,255,255,0.55);
     cursor: pointer;
     white-space: nowrap;
     flex-shrink: 0;
-    transition: background 0.15s;
+    transition: all 0.25s;
+    backdrop-filter: blur(6px);
   }
-  .delivery-pill:hover { background: rgba(255,255,255,0.14); }
-  .delivery-pill strong { color: #E8F0E8; font-weight: 500; }
+  .nb-delivery-pill:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(16,185,129,0.3);
+    color: rgba(255,255,255,0.8);
+  }
+  .nb-delivery-pill strong {
+    color: #E2E8F0;
+    font-weight: 600;
+  }
+  .nb-delivery-pill .nb-pin-icon {
+    color: #10B981;
+  }
 
-  .search-bar {
+  /* ── Search bar ── */
+  .nb-search-wrap {
     flex: 1;
-    max-width: 420px;
+    max-width: 440px;
+    position: relative;
+    border-radius: 12px;
+    padding: 2px;
+    background: rgba(255,255,255,0.06);
+    transition: all 0.3s;
+  }
+  .nb-search-wrap:focus-within {
+    background: linear-gradient(135deg, #10B981, #06B6D4, #8B5CF6);
+    box-shadow: 0 0 20px rgba(16,185,129,0.15);
+  }
+  .nb-search-bar {
     display: flex;
     align-items: center;
-    background: #fff;
+    background: #1A2332;
     border-radius: 10px;
     overflow: hidden;
-    border: 1.5px solid transparent;
-    transition: border-color 0.15s;
+    width: 100%;
   }
-  .search-bar:focus-within { border-color: #7DC56A; }
-  .search-bar input {
+  .nb-search-bar input {
     flex: 1;
     border: none;
     outline: none;
-    padding: 9px 12px;
+    padding: 10px 14px;
     font-size: 13px;
-    font-family: 'DM Sans', sans-serif;
-    color: #2D4A2D;
+    font-family: 'Inter', sans-serif;
+    color: #E2E8F0;
     background: transparent;
   }
-  .search-bar input::placeholder { color: #9DB89A; }
-  .search-btn {
-    background: #6AAB55;
+  .nb-search-bar input::placeholder { color: rgba(255,255,255,0.3); }
+  .nb-search-btn {
+    background: linear-gradient(135deg, #10B981, #06B6D4);
     border: none;
-    padding: 9px 14px;
+    padding: 10px 16px;
     cursor: pointer;
     color: #fff;
     font-size: 17px;
     display: flex;
     align-items: center;
-    transition: background 0.15s;
+    transition: all 0.2s;
   }
-  .search-btn:hover { background: #7DC56A; }
+  .nb-search-btn:hover {
+    filter: brightness(1.15);
+    transform: scale(1.05);
+  }
 
-  .header-actions {
+  /* ── Action buttons ── */
+  .nb-header-actions {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     flex-shrink: 0;
   }
 
-  .action-btn {
+  .nb-action-btn {
     display: flex;
     align-items: center;
-    gap: 6px;
-    background: rgba(255,255,255,0.08);
-    border: 0.5px solid rgba(255,255,255,0.15);
-    border-radius: 8px;
-    padding: 7px 12px;
-    color: #E8F0E8;
+    gap: 7px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 8px 14px;
+    color: rgba(255,255,255,0.7);
     font-size: 12px;
     font-weight: 500;
     cursor: pointer;
     text-decoration: none;
-    transition: background 0.15s;
+    transition: all 0.25s;
     white-space: nowrap;
+    backdrop-filter: blur(6px);
   }
-  .action-btn:hover { background: rgba(255,255,255,0.14); }
-  .action-btn i { font-size: 17px; color: #8FBF80; }
+  .nb-action-btn:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.15);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+  .nb-action-btn i {
+    font-size: 17px;
+    color: rgba(255,255,255,0.45);
+    transition: color 0.25s;
+  }
+  .nb-action-btn:hover i { color: #10B981; }
 
-  .cart-btn {
+  /* ── Cart button ── */
+  .nb-cart-btn {
     display: flex;
     align-items: center;
-    gap: 7px;
-    background: #6AAB55;
+    gap: 8px;
+    background: linear-gradient(135deg, #10B981, #059669);
     border: none;
-    border-radius: 8px;
-    padding: 7px 14px;
+    border-radius: 10px;
+    padding: 8px 16px;
     color: #fff;
     font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-  .cart-btn:hover { background: #7DC56A; }
-  .cart-badge {
-    background: #fff;
-    color: #3A5C3A;
-    font-size: 11px;
     font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-decoration: none;
+    animation: nb-cartPulse 3s ease-in-out infinite;
+  }
+  .nb-cart-btn:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 20px rgba(16,185,129,0.35);
+  }
+  .nb-cart-badge {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
     border-radius: 10px;
-    padding: 1px 6px;
-    min-width: 18px;
+    padding: 2px 7px;
+    min-width: 20px;
     text-align: center;
+    backdrop-filter: blur(4px);
   }
 
-  .nav-bar {
-    background: #3A5C3A;
+  /* ── Nav bar (frosted glass) ── */
+  .nb-nav-bar {
+    background: rgba(26,35,50,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     padding: 0 2rem;
     display: flex;
     align-items: center;
-    border-top: 0.5px solid rgba(255,255,255,0.08);
+    border-top: 1px solid rgba(255,255,255,0.05);
     overflow-x: auto;
     scrollbar-width: none;
   }
-  .nav-bar::-webkit-scrollbar { display: none; }
+  .nb-nav-bar::-webkit-scrollbar { display: none; }
 
-  .all-cats {
+  /* ── All categories button ── */
+  .nb-all-cats {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 11px 16px;
+    gap: 7px;
+    padding: 12px 18px;
     font-size: 13px;
-    color: #E8F0E8;
-    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+    font-weight: 600;
     cursor: pointer;
-    background: rgba(255,255,255,0.06);
-    border-bottom: 2px solid transparent;
+    background: rgba(255,255,255,0.04);
+    border: none;
     white-space: nowrap;
+    transition: all 0.2s;
+    border-radius: 0;
   }
+  .nb-all-cats:hover { background: rgba(255,255,255,0.08); }
 
-  .nav-divider {
-    width: 0.5px;
-    height: 18px;
-    background: rgba(255,255,255,0.12);
+  .nb-nav-divider {
+    width: 1px;
+    height: 20px;
+    background: rgba(255,255,255,0.08);
     margin: 0 4px;
     flex-shrink: 0;
   }
 
-  .nav-link {
+  /* ── Nav links with animated underline ── */
+  .nb-nav-link {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 11px 16px;
+    gap: 7px;
+    padding: 13px 16px;
     font-size: 13px;
-    color: #A8C9A0;
+    color: rgba(255,255,255,0.5);
     text-decoration: none;
     white-space: nowrap;
-    border-bottom: 2px solid transparent;
-    transition: color 0.15s, border-color 0.15s;
     cursor: pointer;
     background: none;
-    border-left: none;
-    border-right: none;
-    border-top: none;
-  }
-  .nav-link:hover { color: #E8F0E8; }
-  .nav-link.active { color: #B8DCAB; border-bottom-color: #7DC56A; }
-  .nav-link i { font-size: 16px; }
-
-  .nav-badge {
-    font-size: 10px;
-    background: #E05C3A;
-    color: #fff;
-    border-radius: 4px;
-    padding: 1px 5px;
+    border: none;
+    position: relative;
+    transition: color 0.25s;
+    font-family: 'Inter', sans-serif;
     font-weight: 500;
   }
+  .nb-nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #10B981, #06B6D4);
+    border-radius: 2px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transform: translateX(-50%);
+  }
+  .nb-nav-link:hover {
+    color: rgba(255,255,255,0.9);
+  }
+  .nb-nav-link:hover::after {
+    width: 70%;
+  }
+  .nb-nav-link.active {
+    color: #10B981;
+  }
+  .nb-nav-link.active::after {
+    width: 80%;
+    background: linear-gradient(90deg, #10B981, #06B6D4);
+    box-shadow: 0 0 8px rgba(16,185,129,0.4);
+  }
+  .nb-nav-link i { font-size: 16px; transition: transform 0.2s; }
+  .nb-nav-link:hover i { transform: scale(1.1); }
 
+  /* ── Nav badge ── */
+  .nb-nav-badge {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: linear-gradient(135deg, #EF4444, #F97316);
+    color: #fff;
+    border-radius: 4px;
+    padding: 2px 6px;
+    box-shadow: 0 0 8px rgba(239,68,68,0.3);
+  }
+
+  /* ── Responsive ── */
   @media (max-width: 768px) {
-    .top-bar { gap: 10px; }
-    .delivery-pill { display: none; }
-    .search-bar { max-width: 100%; order: 3; flex-basis: 100%; }
-    .action-btn span { display: none; }
+    .nb-top-bar { gap: 10px; padding: 12px 1rem; }
+    .nb-delivery-pill { display: none; }
+    .nb-search-wrap { max-width: 100%; order: 3; flex-basis: 100%; }
+    .nb-action-btn span { display: none; }
+    .nb-action-btn { padding: 8px 10px; }
+    .nb-nav-bar { padding: 0 1rem; }
+    .nb-logo { font-size: 22px; }
   }
 `;
 
@@ -251,7 +395,7 @@ const navItems = [
   { icon: "ti-clock", label: "Express" },
 ];
 
-export default function NavBar({ cartCount: initialCartCount = 3, city = "Jabalpur, MP" , counts}) {
+export default function NavBar({ cartCount: initialCartCount = 3, city = "Jabalpur, MP", counts }) {
   const [showPromo, setShowPromo] = useState(true);
   const [activeNav, setActiveNav] = useState("Home");
   const [searchQuery, setSearchQuery] = useState("");
@@ -259,91 +403,93 @@ export default function NavBar({ cartCount: initialCartCount = 3, city = "Jabalp
   return (
     <>
       <style>{styles}</style>
-      <header className="header-wrap w-full">
+      <header className="nb-header-wrap w-full">
 
         {/* Promo bar */}
         {showPromo && (
-          <div className="promo-bar">
+          <div className="nb-promo-bar">
             <i className="ti ti-gift" aria-hidden="true" style={{ fontSize: 14 }} />
-            Free delivery on your first 3 orders! Use code <strong style={{ margin: "0 3px" }}>FRESH3</strong> at checkout.
+            Free delivery on your first 3 orders! Use code <strong style={{ margin: "0 4px" }}>FRESH3</strong> at checkout.
             <a href="#">Shop now</a>
-            <button className="promo-close" onClick={() => setShowPromo(false)} aria-label="Dismiss promo">
+            <button className="nb-promo-close" onClick={() => setShowPromo(false)} aria-label="Dismiss promo">
               <i className="ti ti-x" aria-hidden="true" />
             </button>
           </div>
         )}
 
+        {/* Animated gradient line */}
+        <div className="nb-gradient-line" />
+
         {/* Top bar */}
-        <div className="top-bar">
-          {/* Changed <a> to <Link> for the logo */}
-          <Link className="logo" to="/">
-            <i className="ti ti-shopping-bag" aria-hidden="true" style={{ fontSize: 22, color: "#7DC56A" }} />
+        <div className="nb-top-bar">
+          <Link className="nb-logo" to="/">
+            <i className="ti ti-shopping-bag" aria-hidden="true" />
             FreshNow
           </Link>
 
-          <div className="delivery-pill">
-            <i className="ti ti-map-pin" aria-hidden="true" style={{ fontSize: 14, color: "#7DC56A" }} />
+          <div className="nb-delivery-pill">
+            <i className="ti ti-map-pin nb-pin-icon" aria-hidden="true" style={{ fontSize: 14 }} />
             Deliver to <strong style={{ marginLeft: 4 }}>{city}</strong>
-            <i className="ti ti-chevron-down" aria-hidden="true" style={{ fontSize: 13 }} />
+            <i className="ti ti-chevron-down" aria-hidden="true" style={{ fontSize: 13, opacity: 0.5 }} />
           </div>
 
-          <div className="search-bar">
-            <input
-              type="text"
-              placeholder="Search for vegetables, fruits, snacks…"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <button className="search-btn" aria-label="Search">
-              <i className="ti ti-search" aria-hidden="true" />
-            </button>
+          <div className="nb-search-wrap">
+            <div className="nb-search-bar">
+              <input
+                type="text"
+                placeholder="Search for vegetables, fruits, snacks…"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <button className="nb-search-btn" aria-label="Search">
+                <i className="ti ti-search" aria-hidden="true" />
+              </button>
+            </div>
           </div>
 
-          <div className="header-actions">
-            <a className="action-btn" href="#">
+          <div className="nb-header-actions">
+            <a className="nb-action-btn" href="#">
               <i className="ti ti-user" aria-hidden="true" />
               <span>Account</span>
             </a>
-            <a className="action-btn" href="#">
+            <a className="nb-action-btn" href="#">
               <i className="ti ti-heart" aria-hidden="true" />
               <span>Saved</span>
             </a>
-            <Link to={'/cart'} className="cart-btn">
+            <Link to={'/cart'} className="nb-cart-btn">
               <i className="ti ti-shopping-cart" aria-hidden="true" style={{ fontSize: 17 }} />
               Cart
-              <span className="cart-badge">{+counts}</span>
+              <span className="nb-cart-badge">{+counts}</span>
             </Link>
           </div>
         </div>
 
         {/* Nav bar */}
-        <nav className="nav-bar" aria-label="Category navigation">
-          <div className="all-cats">
+        <nav className="nb-nav-bar" aria-label="Category navigation">
+          <div className="nb-all-cats">
             <i className="ti ti-layout-grid" aria-hidden="true" style={{ fontSize: 16 }} />
             All categories
-            <i className="ti ti-chevron-down" aria-hidden="true" style={{ fontSize: 13 }} />
+            <i className="ti ti-chevron-down" aria-hidden="true" style={{ fontSize: 13, opacity: 0.5 }} />
           </div>
-          <div className="nav-divider" />
+          <div className="nb-nav-divider" />
           {navItems.map(({ icon, label, badge }) => {
             const isHome = label === "Home";
-            
-            // Changed "a" tag logic to use <Link> component when isHome is true
+
             const Tag = isHome ? Link : "button";
-            
-            // Updated extraProps to provide "to" instead of "href"
+
             const extraProps = isHome
               ? { to: "/" }
               : { onClick: () => setActiveNav(label) };
-              
+
             return (
               <Tag
                 key={label}
-                className={`nav-link${activeNav === label ? " active" : ""}`}
+                className={`nb-nav-link${activeNav === label ? " active" : ""}`}
                 {...extraProps}
               >
                 <i className={`ti ${icon}`} aria-hidden="true" />
                 {label}
-                {badge && <span className="nav-badge">{badge}</span>}
+                {badge && <span className="nb-nav-badge">{badge}</span>}
               </Tag>
             );
           })}

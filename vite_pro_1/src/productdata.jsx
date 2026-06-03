@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, memo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 const starImg = "https://cms-assets.tutsplus.com/uploads/users/34/posts/30118/preview_image/star-rating.jpg";
@@ -44,6 +44,8 @@ const tabData = [
 ];
 
 function Productdata({ prod, handleCard }) {
+  
+
   const { xyz } = useParams();
 
   const [qty, setQty] = useState(1);
@@ -311,4 +313,4 @@ function Productdata({ prod, handleCard }) {
   );
 }
 
-export default Productdata;
+export default memo(Productdata);
