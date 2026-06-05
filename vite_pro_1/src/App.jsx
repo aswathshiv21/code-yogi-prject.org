@@ -4,6 +4,7 @@ import ProductListPage from './productListPage';
 import {AddDataPage} from './addDataPage';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import NavBar from './navBar';
 
 function App() {
   const [prods, setProd] = useState([])  
@@ -17,6 +18,7 @@ function App() {
   return ( 
     <>
       <div className='flex flex-col items-center justify-center'>
+        <NavBar/>
          <Routes>
            <Route index element={<ProductListPage prod={prods}/>}></Route>
            <Route path={'/productData/:xyz'} element={<Productdata prod={prods}/>}></Route>

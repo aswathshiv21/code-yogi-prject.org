@@ -41,7 +41,6 @@ function ProductListPage({prod}) {
 
     return (
         <div className="flex flex-col">
-          <NavBar />
           <div className='flex w-full justify-evenly border-none items-center justify-center '>
             <input 
              id='input'
