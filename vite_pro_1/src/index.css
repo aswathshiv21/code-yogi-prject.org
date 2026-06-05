@@ -1,1 +1,20 @@
 @import "tailwindcss";
+
+@theme {
+    --color-primery: #6AAB55;
+    --color-text: black;
+    --color-hov: #EC2D01;
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Smooth scrolling */
+html { scroll-behavior: smooth; }
+
+/* Prevent horizontal overflow */
+body {
+  overflow-x: hidden;
+  min-height: 100vh;
+}
