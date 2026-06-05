@@ -1,6 +1,5 @@
 import React from "react";          
 import Product from "./product";    
-import { useState } from "react";
 import { memo } from "react";
 
     
@@ -8,10 +7,11 @@ function ProductList({item, handleCard}) {
 
     return (
     <> 
-     <div className='flex items-center justify-center bg-white'>
-      <div className='md:grid md:grid-cols-4 gap-2'>
+     <div className='w-full'>
+      <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4'>
          {item.map((i)=> {
             return <Product
+              key={i.id}
               src={i.thumbnail}
               title={i.title}
               price={i.price}
@@ -28,5 +28,3 @@ function ProductList({item, handleCard}) {
 }
 
 export default memo(ProductList);
-
- 

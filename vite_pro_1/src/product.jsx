@@ -12,7 +12,7 @@ function Product({ title, price, src, sku, rat, category, handleCard }) {
   // Render stars dynamically based on the rating
   let pStars = [];
   for (let d = 0; d < normalizedRating; d++) {
-    pStars.push(<img key={d} className="h-4" src={starImg} alt="star" />);
+    pStars.push(<img key={d} className="h-3 sm:h-4" src={starImg} alt="star" />);
   }
 
   const handleAddToCart = () => {
@@ -24,10 +24,10 @@ function Product({ title, price, src, sku, rat, category, handleCard }) {
   };
 
   return (
-    <div className="border border-gray-200 w-2xs flex flex-col bg-white rounded-xl overflow-hidden hover:border-blue-400 transition-all duration-300 hover:shadow-lg p-4 m-0 group">
+    <div className="border border-gray-200 w-full flex flex-col bg-white rounded-xl overflow-hidden hover:border-blue-400 transition-all duration-300 hover:shadow-lg p-3 sm:p-4 m-0 group">
       
       {/* Image Container */}
-      <div className="w-full h-fit mb-2 relative overflow-hidden rounded-lg">
+      <div className="w-full aspect-square mb-2 relative overflow-hidden rounded-lg bg-gray-50">
         <img 
           src={src} 
           alt={title} 
@@ -36,8 +36,8 @@ function Product({ title, price, src, sku, rat, category, handleCard }) {
       </div>
 
       {/* Content */}
-      <p className="text-xs text-gray-500">{category}</p>
-      <h5 className="text-sm font-medium text-gray-800 truncate">{title}</h5>
+      <p className="text-[10px] sm:text-xs text-gray-500">{category}</p>
+      <h5 className="text-xs sm:text-sm font-medium text-gray-800 truncate">{title}</h5>
       
       {/* Ratings */}
       <div className="flex mt-1">
@@ -45,16 +45,16 @@ function Product({ title, price, src, sku, rat, category, handleCard }) {
       </div>
       
       {/* Price + Add to Cart row */}
-      <div className="flex items-center justify-between mt-2 gap-2">
-        <p className="text-sm font-semibold text-gray-900">
+      <div className="flex items-center justify-between mt-2 gap-1 sm:gap-2">
+        <p className="text-xs sm:text-sm font-semibold text-gray-900">
           ${Number(price).toFixed(2)}
         </p>
         <button
           onClick={handleAddToCart}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-300 cursor-pointer ${
+          className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg text-[10px] sm:text-xs font-semibold transition-all duration-300 cursor-pointer shrink-0 ${
             added
               ? "bg-green-500 text-white shadow-md shadow-green-200"
-              : "bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:from-emerald-600 hover:to-teal-600 hover:shadow-md hover:shadow-emerald-200 hover:-translate-y-0.5 active:translate-y-0"
+              : "text-white hover:shadow-md hover:shadow-emerald-200 hover:-translate-y-0.5 active:translate-y-0"
           }`}
           style={
             !added
@@ -64,11 +64,11 @@ function Product({ title, price, src, sku, rat, category, handleCard }) {
         >
           {added ? (
             <>
-              <span>✓</span> Added
+              <span>✓</span> <span className="hidden sm:inline">Added</span>
             </>
           ) : (
             <>
-              <span style={{ fontSize: 14, lineHeight: 1 }}>🛒</span> Add to Cart
+              <span style={{ fontSize: 12, lineHeight: 1 }}>🛒</span> <span className="hidden xs:inline">Add</span><span className="hidden sm:inline"> to Cart</span>
             </>
           )}
         </button>
@@ -77,7 +77,7 @@ function Product({ title, price, src, sku, rat, category, handleCard }) {
       {/* Action Link */}
       <Link 
         to={`/productData/${sku}`} 
-        className="text-xs text-blue-500 hover:underline mt-2 inline-block"
+        className="text-[10px] sm:text-xs text-blue-500 hover:underline mt-2 inline-block"
       >
         view details
       </Link>

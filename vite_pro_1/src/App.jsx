@@ -5,7 +5,7 @@ import ProductListPage from './productListPage';
 import {AddDataPage} from './addDataPage';
 import axios from 'axios';
 import { useState, useEffect, useCallback } from 'react';
-import About from './about';
+import About from './login';
 import NavBar from './navBar';
 import Footer from './footer';
 import CardPage from './cart';
@@ -15,6 +15,7 @@ import { memo } from 'react';
 function App() {
   const [prods, setProd] = useState([])  
   const [card, setCard] = useState({})
+  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
     if (prods.length > 0) return;
@@ -32,16 +33,16 @@ function App() {
     setCard(newCard)
   },[card]) 
 
-  console.clear()
+  // console.clear()
   return ( 
     <>
-      <div className='flex flex-col w-full items-center justify-center  bg-gray-200'>
-        <NavBar counts={ Object.keys(card).reduce((Opt, cru)=> {
+      <div className='flex flex-col w-full items-center justify-center bg-gray-200 min-h-screen'>
+        <NavBar counts={ Object.keys(card).reduce((Opt, cru)=>{
           return Opt + card[cru];
-        },0)}/>
-         <div className='m-16 w-7xl'>
+        },0)} searchQuery={searchQuery} onSearchChange={setSearchQuery}/>
+         <div className='w-full  mx-auto sm:px-6 lg:px-8 py-6 sm:py-10 md:py-16'>
             <Routes>
-             <Route index element={<ProductListPage prod={prods} handleCard={cart}/>}></Route>
+             <Route index element={<ProductListPage prod={prods} handleCard={cart} searchQuery={searchQuery}/>}></Route>
              <Route path={'/productData/:xyz'} element={<Productdata prod={prods} handleCard={cart}/>}></Route>
              <Route path='/addData' element={<AddDataPage/>}></Route>
              <Route path='/about' element={<About/>}></Route>

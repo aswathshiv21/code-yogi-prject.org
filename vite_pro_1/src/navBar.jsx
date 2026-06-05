@@ -395,10 +395,9 @@ const navItems = [
   { icon: "ti-clock", label: "Express" },
 ];
 
-export default function NavBar({ cartCount: initialCartCount = 3, city = "Jabalpur, MP", counts }) {
+export default function NavBar({ cartCount: initialCartCount = 3, city = "Jabalpur, MP", counts, searchQuery = "", onSearchChange }) {
   const [showPromo, setShowPromo] = useState(true);
   const [activeNav, setActiveNav] = useState("Home");
-  const [searchQuery, setSearchQuery] = useState("");
 
   return (
     <>
@@ -439,7 +438,7 @@ export default function NavBar({ cartCount: initialCartCount = 3, city = "Jabalp
                 type="text"
                 placeholder="Search for vegetables, fruits, snacks…"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => onSearchChange && onSearchChange(e.target.value)}
               />
               <button className="nb-search-btn" aria-label="Search">
                 <i className="ti ti-search" aria-hidden="true" />
