@@ -40,7 +40,7 @@ function App() {
         <NavBar counts={ Object.keys(card).reduce((Opt, cru)=>{
           return Opt + card[cru];
         },0)} searchQuery={searchQuery} onSearchChange={setSearchQuery}/>
-         <div className='w-full  mx-auto sm:px-6 lg:px-8 py-6 sm:py-10 md:py-16'>
+         <div className=' w-full'>
             <Routes>
              <Route index element={<ProductListPage prod={prods} handleCard={cart} searchQuery={searchQuery}/>}></Route>
              <Route path={'/productData/:xyz'} element={<Productdata prod={prods} handleCard={cart}/>}></Route>
